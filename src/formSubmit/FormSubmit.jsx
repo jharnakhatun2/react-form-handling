@@ -1,11 +1,18 @@
 import { useState } from "react";
 
-export default function SingleInput() {
+export default function FormSubmit() {
   const [name, setName] = useState("");
-  name;
+  console.log(name);
+
+  const handleSubmit = (event) => {
+    setName("");
+    event.preventDefault();
+    alert(`The name you entered was: ${name}`);
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>
           Enter your name:
           <input
@@ -14,6 +21,7 @@ export default function SingleInput() {
             onChange={(e) => setName(e.target.value)}
           />
         </label>
+        <input type="submit" />
       </form>
     </>
   );
