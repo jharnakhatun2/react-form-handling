@@ -5,19 +5,35 @@ export default function MultipleFormInput() {
     name: "",
     email: "",
     message: "",
+    select: "Volvo",
+    isAgree: false,
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
+    const newValue = type === "checkbox" ? checked : value;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: newValue,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formData);
+    // Clear form data
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+      select: "Volvo",
+      isAgree: false,
     });
   };
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input
           type="text"
@@ -45,6 +61,30 @@ export default function MultipleFormInput() {
           value={formData.message}
           onChange={handleChange}
         />
+        <br />
+        <br />
+        <select name="select" value={formData.select} onChange={handleChange}>
+          <option value="Ford">Ford</option>
+          <option value="Volvo">Volvo</option>
+          <option value="Fiat">Fiat</option>
+        </select>
+        <br />
+        <br />
+
+        <input
+          type="checkbox"
+          id="isAgree"
+          name="isAgree"
+          checked={formData.isAgree}
+          onChange={handleChange}
+        />
+
+        {formData.isAgree ? (
+          <span>Yes! We agree.</span>
+        ) : (
+          <span>Do you agree to continue?</span>
+        )}
+
         <br />
         <br />
         <button type="submit">Submit</button>
